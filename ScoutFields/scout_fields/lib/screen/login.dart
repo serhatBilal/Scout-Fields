@@ -1,21 +1,25 @@
+// ignore_for_file: sized_box_for_whitespace, unused_import
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pathfinder/main.dart';
+import 'package:pathfinder/screen/ilanlar.dart';
 
 // ignore: use_key_in_widget_constructors
 class LoginPage extends StatelessWidget {
   final passTextController = TextEditingController();
   final mailTextController = TextEditingController();
 
-  // girisYap(BuildContext context) async {
-  //   await FirebaseAuth.instance
-  //       .signInWithEmailAndPassword(
-  //           email: mailTextController.text, password: passTextController.text)
-  //       .then((kullanici) {
-  //     Navigator.pushAndRemoveUntil(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const AnaSayfa()),
-  //         (route) => false);
-  //   });
-  // }
+  girisYap(BuildContext context) async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: mailTextController.text, password: passTextController.text)
+        .then((kullanici) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const AnaSayfa()),
+          (route) => false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,7 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-      body: SizedBox(
+      body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
         child: Column(
@@ -93,7 +97,7 @@ class LoginPage extends StatelessWidget {
                       minWidth: double.infinity,
                       height: 60,
                       onPressed: () {
-                        // girisYap(context);
+                        girisYap(context);
                       },
                       color: Colors.green,
                       elevation: 0,

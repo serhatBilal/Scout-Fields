@@ -1,6 +1,6 @@
 {
-    "name": "scout_fields",
-    "short_name": "scout_fields",
+    "name": "pathfinder",
+    "short_name": "pathfinder",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

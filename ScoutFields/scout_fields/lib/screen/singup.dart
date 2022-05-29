@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pathfinder/screen/welcome.dart';
 
 // ignore: must_be_immutable
 class SignupPage extends StatelessWidget {
@@ -6,31 +9,31 @@ class SignupPage extends StatelessWidget {
   final mailTextController = TextEditingController();
   final userNameTextController = TextEditingController();
 
-  // FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   SignupPage({Key? key}) : super(key: key);
 
-  // Future<void> kayitOl(BuildContext context) async {
-  //   await FirebaseAuth.instance
-  //       .createUserWithEmailAndPassword(
-  //           email: mailTextController.text, password: passTextController.text)
-  //       .then((kullanici) {
-  //     FirebaseFirestore.instance
-  //         .collection("Kullanicilar")
-  //         .doc(mailTextController.text)
-  //         .set({
-  //       'kullaniciID': auth.currentUser!.uid,
-  //       "KullaniciEposta": mailTextController.text,
-  //       "KullaniciSifre": passTextController.text,
-  //       "KullaniciAdi": userNameTextController.text,
-  //     }).then((kullanici) {
-  //       Navigator.pushAndRemoveUntil(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => const WelcomePage()),
-  //           (route) => false);
-  //     });
-  //   });
-  // }
+  Future<void> kayitOl(BuildContext context) async {
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: mailTextController.text, password: passTextController.text)
+        .then((kullanici) {
+      FirebaseFirestore.instance
+          .collection("Kullanicilar")
+          .doc(mailTextController.text)
+          .set({
+        'kullaniciID': auth.currentUser!.uid,
+        "KullaniciEposta": mailTextController.text,
+        "KullaniciSifre": passTextController.text,
+        "KullaniciAdi": userNameTextController.text,
+      }).then((kullanici) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const WelcomePage()),
+            (route) => false);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +84,9 @@ class SignupPage extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  inputFile(label: "İsim", controller: userNameTextController),
-                  inputFile(label: "Soyisim"),
+                  inputFile(
+                      label: "Kullanıcı adı",
+                      controller: userNameTextController),
                   inputFile(label: "E-mail", controller: mailTextController),
                   inputFile(
                       label: "Parola",
@@ -105,7 +109,7 @@ class SignupPage extends StatelessWidget {
                   minWidth: double.infinity,
                   height: 60,
                   onPressed: () {
-                    // kayitOl(context);
+                    kayitOl(context);
                   },
                   color: Colors.green,
                   elevation: 0,
